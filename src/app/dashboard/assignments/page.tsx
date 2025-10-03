@@ -41,16 +41,35 @@ export default async function AssignmentsPage() {
         <CardContent>
           <div className="space-y-3">
             {assignments.map((a: any) => (
-              <div key={a._id} className="border rounded p-3 flex items-center justify-between">
-                <div>
-                  <p className="font-semibold">{a.title}</p>
-                  <p className="text-sm text-muted-foreground">{a.description || ""}</p>
-                  {a.deadline && <p className="text-xs text-muted-foreground">Deadline: {new Date(a.deadline).toLocaleString()}</p>}
+              <div key={a._id} className="border rounded p-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold">{a.title}</p>
+                    <p className="text-sm text-muted-foreground">{a.description || ""}</p>
+                    {a.deadline && <p className="text-xs text-muted-foreground">Deadline: {new Date(a.deadline).toLocaleString()}</p>}
+                  </div>
+                </div>
+                <div className="mt-3 space-y-2">
+                  {submissions.filter((s:any)=> String(s.assignment)===String(a._id)).map((s:any)=> (
+                    <SubmissionRow key={s._id} submission={s} />
+                  ))}
+                  {submissions.filter((s:any)=> String(s.assignment)===String(a._id)).length===0 && (
+                    <p className="text-sm text-muted-foreground">No submissions yet.</p>
+                  )}
                 </div>
               </div>
             ))}
             {assignments.length === 0 && <p className="text-sm text-muted-foreground">No assignments created.</p>}
           </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Plagiarism Checker</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <PlagiarismForm />
         </CardContent>
       </Card>
     </div>
