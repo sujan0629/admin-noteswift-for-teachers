@@ -80,6 +80,43 @@ export default async function AssignmentsPage() {
 import { useState, useTransition } from "react";
 import { Textarea } from "@/components/ui/textarea";
 
+function SubmissionRow({ submission }: { submission: any }) {
+  const [score, setScore] = useState<number>(submission.score ?? 0);
+  const [feedback, setFeedback] = useState<string>(submission.feedback ?? "");
+  const [isPending, startTransition] = useTransition();
+  return (
+    <div className="border rounded p-2 flex flex-col gap-2">
+      <div className="flex items-center justify-between text-sm">
+        <div>
+          <span className="font-medium">{submission.student?.name || 'Student'}</span>
+          <span className="ml-2 text-muted-foreground">{new Date(submission.submittedAt).toLocaleString()}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Input type="number" value={score} onChange={(e)=>setScore(parseInt(e.target.value))} className="w-24" />
+          <Button size="sm" onClick={()=> startTransition(async ()=>{ await gradeSubmission({ submissionId: submission._id, score, feedback: feedback || undefined }); })} disabled={isPending}>Save</Button>
+          <Button size="sm" variant="secondary" onClick={()=> startTransition(async ()=>{ await autoGradeSubmission({ submissionId: submission._id }); })} disabled={isPending}>Auto</Button>
+        </div>
+      </div>
+      <Textarea placeholder="Feedback / comments" value={feedback} onChange={(e)=>setFeedback(e.target.value)} />
+    </div>
+  );
+}
+
+function PlagiarismForm() {
+  const [text, setText] = useState("");
+  const [result, setResult] = useState<number | null>(null);
+  const [isPending, startTransition] = useTransition();
+  return (
+    <form onSubmit={(e)=>{ e.preventDefault(); startTransition(async ()=>{ const res = await fetch(`/api/plagiarism`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) }); const data = await res.json(); setResult(data.score ?? null); }); }} className="space-y-3">
+      <Textarea placeholder="Paste text to check..." value={text} onChange={(e)=>setText(e.target.value)} />
+      <div className="flex items-center gap-2">
+        <Button type="submit" disabled={isPending}>Run Check</Button>
+        {result!=null && <span className="text-sm">Similarity: {result}%</span>}
+      </div>
+    </form>
+  );
+}
+
 function CreateAssignmentForm({ courses, chapters }: { courses: any[]; chapters: any[] }) {
   const [courseId, setCourseId] = useState<string>(courses[0]?._id || "");
   const [chapterId, setChapterId] = useState<string>("");
