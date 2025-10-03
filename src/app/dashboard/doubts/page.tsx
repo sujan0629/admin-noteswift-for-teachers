@@ -17,7 +17,7 @@ async function getData() {
 }
 
 export default async function DoubtsPage() {
-  const { doubts } = await getData();
+  const { doubts, teacherId } = await getData();
 
   return (
     <div className="space-y-8">
