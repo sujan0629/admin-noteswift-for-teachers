@@ -14,7 +14,8 @@ async function getData() {
   const assignments = await Assignment.find({}).sort({ createdAt: -1 }).lean();
   const courses = await Course.find({}).lean();
   const chapters = await Chapter.find({}).lean();
-  return { assignments: JSON.parse(JSON.stringify(assignments)), courses: JSON.parse(JSON.stringify(courses)), chapters: JSON.parse(JSON.stringify(chapters)) };
+  const submissions = await Submission.find({}).sort({ submittedAt: -1 }).populate('student').lean();
+  return { assignments: JSON.parse(JSON.stringify(assignments)), courses: JSON.parse(JSON.stringify(courses)), chapters: JSON.parse(JSON.stringify(chapters)), submissions: JSON.parse(JSON.stringify(submissions)) };
 }
 
 export default async function AssignmentsPage() {
