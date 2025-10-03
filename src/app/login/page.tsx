@@ -23,7 +23,8 @@ export default function LoginPage() {
   setError("");
   setIsLoading(true);
 
-  const loginResult = await handleAdminLogin(username, password);
+  const resp = await fetch("/api/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username, password }) });
+  const loginResult = await resp.json();
 
   if (loginResult.success) {
     const result = await handleSendOtp();
