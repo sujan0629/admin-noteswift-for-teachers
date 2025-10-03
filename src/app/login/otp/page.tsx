@@ -72,7 +72,7 @@ export default function OtpPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4">
-      <Card className="w-full max-w-md shadow-2xl">
+      <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex items-center justify-center">
             <img src="/assets/logo.jpg" alt="NoteSwift Logo" className="h-14 w-14 object-contain" />

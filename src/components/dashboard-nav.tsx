@@ -79,8 +79,8 @@ export function DashboardNav() {
                 }}
                className={cn(
   "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
-  pathname === link.href || pathname.startsWith(`${link.href}/`)
-    ? "bg-gradient-to-r from-primary to-accent text-primary-foreground shadow"
+  (link as any).children ? (pathname === link.href || pathname.startsWith(`${link.href}/`)) : pathname === link.href
+    ? "bg-gradient-to-r from-primary to-accent text-primary-foreground"
     : "text-foreground/80 hover:bg-secondary hover:text-foreground"
 )}
 
