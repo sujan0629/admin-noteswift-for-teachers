@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Users, FileText, MessageSquare, Clock, TrendingUp, Calendar, Bell, Video, CheckCircle } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { MiniActivityChart } from "./analytics/analytics-charts";
 
 async function getData() {
   // MOCK DATA FOR FRONTEND DEVELOPMENT
