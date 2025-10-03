@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/mongoose";
-import Assignment from "@/models/Assignment";
+import Assignment, { Submission } from "@/models/Assignment";
 import Course from "@/models/Course";
 import Chapter from "@/models/Chapter";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
