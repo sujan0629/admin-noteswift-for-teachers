@@ -19,7 +19,7 @@ async function getData() {
 }
 
 export default async function AssignmentsPage() {
-  const { assignments, courses, chapters } = await getData();
+  const { assignments, courses, chapters, submissions } = await getData();
 
   return (
     <div className="space-y-8">
