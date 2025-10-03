@@ -4,6 +4,7 @@ import Assignment from "@/models/Assignment";
 import Test from "@/models/Test";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Bar } from "recharts";
+import { AttendanceExport } from "./export-client";
 
 async function getData() {
   await dbConnect();
