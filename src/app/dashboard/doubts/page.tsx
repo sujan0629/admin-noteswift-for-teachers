@@ -44,6 +44,9 @@ export default async function DoubtsPage() {
                     </div>
                   ))}
                 </div>
+                <div className="mt-3">
+                  <ReplyAssignForm doubtId={d._id} defaultTeacherId={teacherId} />
+                </div>
               </div>
             ))}
             {doubts.length === 0 && <p className="text-sm text-muted-foreground">No doubts yet.</p>}
