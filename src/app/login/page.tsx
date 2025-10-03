@@ -62,11 +62,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md shadow-2xl">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex items-center justify-center">
-                           <img
-      src="/assets/logo.jpg"
-      alt="NoteSwift Logo"
-      className="h-16 w-16 object-contain"
-    />
+            <img src="/assets/logo.jpg" alt="NoteSwift Logo" className="h-14 w-14 object-contain" />
           </div>
           <CardTitle className="text-3xl font-bold font-headline">NoteSwift Teacher</CardTitle>
           <CardDescription>Enter your credentials to access your teacher dashboard</CardDescription>
