@@ -83,7 +83,7 @@ export default function DashboardLayout({
       <SidebarProvider>
         <div className="flex min-h-screen w-full">
           {/* Sidebar */}
-          <Sidebar className="h-full">
+          <Sidebar className="h-full bg-sidebar/80 backdrop-blur supports-[backdrop-filter]:bg-sidebar/70">
             <SidebarHeader>
               <div className="flex items-center gap-2">
                 <img
@@ -119,11 +119,11 @@ export default function DashboardLayout({
 
           {/* Right side */}
           <SidebarInset>
-            <div className="flex flex-col flex-1 min-h-screen bg-background">
+            <div className="flex flex-col flex-1 min-h-screen bg-background/60">
               {/* Header */}
-              <header className="flex items-center justify-between p-4 border-b z-10 bg-background relative">
+              <header className="sticky top-0 flex items-center justify-between p-4 md:p-5 border-b z-20 bg-background/70 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <SidebarTrigger />
-                <h2 className="text-xl font-semibold font-headline">
+                <h2 className="text-xl md:text-2xl font-semibold font-headline">
                   Welcome Back!
                 </h2>
                 <Button onClick={handleLogout} disabled={isLoggingOut}>

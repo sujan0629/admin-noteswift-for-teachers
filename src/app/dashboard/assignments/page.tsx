@@ -4,7 +4,7 @@
 // import Course from "@/models/Course";
 // import Chapter from "@/models/Chapter";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
-import { CreateAssignmentForm, SubmissionRow, PlagiarismForm } from "./assignment-forms";
+import { SubmissionRow } from "./assignment-forms";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { FileText, CheckCircle, Clock, AlertTriangle, Users, BarChart3, Copy, Search, TrendingUp, FileCheck } from "lucide-react";
@@ -189,7 +189,7 @@ export default async function AssignmentsPage() {
 
       {/* Assignment Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        <Card>
+        <Card className="bg-blue-50/60 border-blue-100">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Assignments</CardTitle>
           </CardHeader>
@@ -201,7 +201,7 @@ export default async function AssignmentsPage() {
             <p className="text-xs text-muted-foreground mt-1">All time</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-secondary/60">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Active</CardTitle>
           </CardHeader>
@@ -213,7 +213,7 @@ export default async function AssignmentsPage() {
             <p className="text-xs text-muted-foreground mt-1">Currently open</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-l-4 border-red-500">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Overdue</CardTitle>
           </CardHeader>
@@ -225,7 +225,7 @@ export default async function AssignmentsPage() {
             <p className="text-xs text-muted-foreground mt-1">Past deadline</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-l-4 border-orange-500">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Pending Grading</CardTitle>
           </CardHeader>
@@ -237,13 +237,13 @@ export default async function AssignmentsPage() {
             <p className="text-xs text-muted-foreground mt-1">Need review</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-blue-50/60 to-transparent">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Submission Rate</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-purple-500" />
+              <TrendingUp className="h-5 w-5 text-blue-500" />
               {stats.avgSubmissionRate}%
             </div>
             <p className="text-xs text-muted-foreground mt-1">Average</p>
@@ -264,7 +264,14 @@ export default async function AssignmentsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <CreateAssignmentForm courses={courses} chapters={chapters} />
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button asChild>
+                <a href="/dashboard/assignments/new">Go to Create Page</a>
+              </Button>
+              <Button asChild variant="outline">
+                <a href="/dashboard/assignments">Learn More</a>
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
@@ -279,7 +286,14 @@ export default async function AssignmentsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <PlagiarismForm />
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button asChild>
+                <a href="/dashboard/assignments/plagiarism">Open Plagiarism Checker</a>
+              </Button>
+              <Button asChild variant="outline">
+                <a href="/dashboard/plagiarism">View All Reports</a>
+              </Button>
+            </div>
             <div className="mt-4 p-3 bg-muted rounded-lg">
               <h4 className="text-sm font-semibold mb-2">Detection Features:</h4>
               <ul className="text-xs space-y-1 text-muted-foreground">

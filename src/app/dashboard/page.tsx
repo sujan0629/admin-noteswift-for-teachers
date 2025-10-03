@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Users, FileText, MessageSquare, Clock, TrendingUp, Calendar, Bell, Video, CheckCircle } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { MiniActivityChart } from "./analytics/analytics-charts";
 
 async function getData() {
   // MOCK DATA FOR FRONTEND DEVELOPMENT
@@ -66,7 +67,7 @@ export default async function DashboardPage() {
 
       {/* Key Stats Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+        <Card className="bg-blue-50/60 border-blue-100">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Total Students</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
@@ -77,7 +78,7 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-secondary/60">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Pending Grading</CardTitle>
             <FileText className="h-4 w-4 text-muted-foreground" />
@@ -88,7 +89,7 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border-l-4 border-blue-500">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Open Doubts</CardTitle>
             <MessageSquare className="h-4 w-4 text-muted-foreground" />
@@ -99,7 +100,7 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gradient-to-br from-blue-50/60 to-transparent">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Completion Rate</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -110,6 +111,25 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Weekly Activity */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Weekly Activity</CardTitle>
+          <CardDescription>Submissions, messages, and attendance interactions</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <MiniActivityChart data={[
+            { day: 'Mon', value: 22 },
+            { day: 'Tue', value: 35 },
+            { day: 'Wed', value: 28 },
+            { day: 'Thu', value: 44 },
+            { day: 'Fri', value: 39 },
+            { day: 'Sat', value: 18 },
+            { day: 'Sun', value: 12 },
+          ]} />
+        </CardContent>
+      </Card>
 
       {/* Main Content Grid */}
       <div className="grid gap-6 md:grid-cols-3">

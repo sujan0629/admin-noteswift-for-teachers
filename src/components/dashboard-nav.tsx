@@ -18,15 +18,34 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { useLoading } from "@/context/loading-context";
 
 const links = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/dashboard/courses", label: "Courses", icon: BookCopy },
+  {
+    href: "/dashboard/courses",
+    label: "Courses",
+    icon: BookCopy,
+    children: [
+      { href: "/dashboard/courses/new-chapter", label: "Create Chapter" },
+      { href: "/dashboard/courses/upload-content", label: "Upload Content" },
+    ]
+  },
   { href: "/dashboard/live-classes", label: "Live Classes", icon: Users },
-  { href: "/dashboard/assignments", label: "Assignments", icon: Bell },
+  {
+    href: "/dashboard/assignments",
+    label: "Assignments",
+    icon: Bell,
+    children: [
+      { href: "/dashboard/assignments/new", label: "Create Assignment" },
+      { href: "/dashboard/assignments/plagiarism", label: "Plagiarism Checker" },
+    ]
+  },
   { href: "/dashboard/tests", label: "Tests", icon: LineChart },
   { href: "/dashboard/students", label: "Students", icon: Users },
   { href: "/dashboard/batches", label: "Batches", icon: ShieldCheck },
@@ -60,9 +79,9 @@ export function DashboardNav() {
                 }}
                className={cn(
   "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
-  pathname === link.href
-    ? "bg-primary text-primary-foreground"
-    : "hover:bg-blue-100 text-gray-700 hover:text-blue-600"
+  (link as any).children ? (pathname === link.href || pathname.startsWith(`${link.href}/`)) : pathname === link.href
+    ? "bg-gradient-to-r from-primary to-accent text-primary-foreground"
+    : "text-foreground/80 hover:bg-secondary hover:text-foreground"
 )}
 
               >
@@ -70,6 +89,17 @@ export function DashboardNav() {
                 <span className="font-medium">{link.label}</span>
               </Link>
             </SidebarMenuButton>
+            {link.children && (
+              <SidebarMenuSub>
+                {link.children.map((child) => (
+                  <SidebarMenuSubItem key={child.href}>
+                    <SidebarMenuSubButton asChild isActive={pathname === child.href}>
+                      <Link href={child.href}>{child.label}</Link>
+                    </SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                ))}
+              </SidebarMenuSub>
+            )}
           </SidebarMenuItem>
         ))}
       </SidebarMenu>

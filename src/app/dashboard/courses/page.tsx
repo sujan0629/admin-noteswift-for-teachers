@@ -4,8 +4,6 @@
 // import Chapter from "@/models/Chapter";
 // import Content from "@/models/Content";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { CreateChapterForm } from "./create-chapter-form";
-import { CreateContentForm } from "./create-content-form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BookOpen, FileText, Video, FileArchive, CheckSquare, HelpCircle, BarChart3, Users, Clock } from "lucide-react";
@@ -106,7 +104,7 @@ export default async function CoursesPage() {
 
       {/* Content Overview Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        <Card>
+        <Card className="bg-blue-50/60 border-blue-100">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Content</CardTitle>
           </CardHeader>
@@ -115,7 +113,7 @@ export default async function CoursesPage() {
             <p className="text-xs text-muted-foreground mt-1">Across all courses</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-secondary/60">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Video Lectures</CardTitle>
           </CardHeader>
@@ -127,7 +125,7 @@ export default async function CoursesPage() {
             <p className="text-xs text-muted-foreground mt-1">Hours of content</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-l-4 border-green-500">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">PDF Documents</CardTitle>
           </CardHeader>
@@ -139,7 +137,7 @@ export default async function CoursesPage() {
             <p className="text-xs text-muted-foreground mt-1">Study materials</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-l-4 border-orange-500">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Assignments</CardTitle>
           </CardHeader>
@@ -151,13 +149,13 @@ export default async function CoursesPage() {
             <p className="text-xs text-muted-foreground mt-1">Active tasks</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-blue-50/60 to-transparent">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Question Banks</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold flex items-center gap-2">
-              <HelpCircle className="h-5 w-5 text-purple-500" />
+              <HelpCircle className="h-5 w-5 text-blue-500" />
               {stats.questionBanks}
             </div>
             <p className="text-xs text-muted-foreground mt-1">Practice sets</p>
@@ -178,7 +176,14 @@ export default async function CoursesPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <CreateChapterForm courses={courses} />
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button asChild>
+                <a href="/dashboard/courses/new-chapter">Go to Create Chapter</a>
+              </Button>
+              <Button asChild variant="outline">
+                <a href="/dashboard/courses">Learn More</a>
+              </Button>
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -192,7 +197,14 @@ export default async function CoursesPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <CreateContentForm chapters={chapters} />
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button asChild>
+                <a href="/dashboard/courses/upload-content">Go to Upload Page</a>
+              </Button>
+              <Button asChild variant="outline">
+                <a href="/dashboard/courses">Content Guidelines</a>
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
