@@ -55,7 +55,8 @@ export default async function AnalyticsPage() {
           <CardDescription>Daily records count</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-64">
+          <AttendanceExport rows={attendanceByDay} />
+          <div className="h-64 mt-4">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={attendanceByDay}>
                 <CartesianGrid vertical={false} strokeDasharray="3 3" />
