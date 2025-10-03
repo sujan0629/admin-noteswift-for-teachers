@@ -212,6 +212,10 @@ function AddQuestionForm({ tests }: { tests: any[] }) {
       )}
       <div className="grid grid-cols-2 gap-2 md:col-span-2">
         <div>
+          <Label>Topic (optional)</Label>
+          <Input value={topic} onChange={(e)=>setTopic(e.target.value)} placeholder="e.g., Algebra - Quadratic" />
+        </div>
+        <div>
           <Label>Difficulty</Label>
           <Select value={difficulty} onValueChange={setDifficulty}>
             <SelectTrigger><SelectValue /></SelectTrigger>
