@@ -67,7 +67,7 @@ export default async function DashboardPage() {
 
       {/* Key Stats Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
+        <Card className="bg-blue-50/60 border-blue-100">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Total Students</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
@@ -78,7 +78,7 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-secondary/60">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Pending Grading</CardTitle>
             <FileText className="h-4 w-4 text-muted-foreground" />
@@ -89,7 +89,7 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border-l-4 border-blue-500">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Open Doubts</CardTitle>
             <MessageSquare className="h-4 w-4 text-muted-foreground" />
@@ -100,7 +100,7 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gradient-to-br from-blue-50/60 to-transparent">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium">Completion Rate</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
