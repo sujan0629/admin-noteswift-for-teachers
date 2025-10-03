@@ -1,0 +1,91 @@
+import dbConnect from "@/lib/mongoose";
+import Student from "@/models/Student";
+import Course from "@/models/Course";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { markAttendance } from "@/app/teacher-actions";
+
+async function getData() {
+  await dbConnect();
+  const students = await Student.find({}).lean();
+  const courses = await Course.find({}).lean();
+  return { students: JSON.parse(JSON.stringify(students)), courses: JSON.parse(JSON.stringify(courses)) };
+}
+
+export default async function StudentsPage() {
+  const { students, courses } = await getData();
+
+  return (
+    <div className="space-y-8">
+      <h1 className="text-2xl font-headline font-bold">Students</h1>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Roster</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            {students.map((s:any)=> (
+              <div key={s._id} className="flex items-center justify-between border rounded p-3">
+                <div>
+                  <p className="font-semibold">{s.name}</p>
+                  <p className="text-sm text-muted-foreground">{s.email}</p>
+                </div>
+                <ManualAttendanceForm studentId={s._id} courses={courses} />
+              </div>
+            ))}
+            {students.length === 0 && <p className="text-sm text-muted-foreground">No students found.</p>}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+"use client";
+import { useState, useTransition } from "react";
+
+function ManualAttendanceForm({ studentId, courses }: { studentId: string; courses: any[] }) {
+  const [courseId, setCourseId] = useState<string>(courses[0]?._id || "");
+  const [date, setDate] = useState<string>("");
+  const [status, setStatus] = useState<string>("present");
+  const [note, setNote] = useState<string>("");
+  const [isPending, startTransition] = useTransition();
+
+  return (
+    <form onSubmit={(e)=>{ e.preventDefault(); startTransition(async ()=>{ await markAttendance({ studentId, courseId, date: date ? new Date(date).toISOString() : new Date().toISOString(), status: status as any, note: note || undefined }); }); }} className="flex items-end gap-2">
+      <div className="w-40">
+        <Label>Course</Label>
+        <Select value={courseId} onValueChange={setCourseId}>
+          <SelectTrigger><SelectValue /></SelectTrigger>
+          <SelectContent>
+            {courses.map((c)=> <SelectItem key={c._id} value={c._id}>{c.title}</SelectItem>)}
+          </SelectContent>
+        </Select>
+      </div>
+      <div>
+        <Label>Date</Label>
+        <Input type="date" value={date} onChange={(e)=>setDate(e.target.value)} />
+      </div>
+      <div>
+        <Label>Status</Label>
+        <Select value={status} onValueChange={setStatus}>
+          <SelectTrigger><SelectValue /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="present">Present</SelectItem>
+            <SelectItem value="absent">Absent</SelectItem>
+            <SelectItem value="late">Late</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="w-48">
+        <Label>Note</Label>
+        <Input value={note} onChange={(e)=>setNote(e.target.value)} />
+      </div>
+      <Button type="submit" disabled={isPending}>Mark</Button>
+    </form>
+  );
+}
