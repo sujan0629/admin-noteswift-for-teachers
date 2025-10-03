@@ -77,6 +77,7 @@ export default async function TestsPage() {
 "use client";
 import { useState, useTransition } from "react";
 import { Textarea } from "@/components/ui/textarea";
+import { LatexPreview } from "@/components/latex-preview";
 
 function CreateTestForm({ courses, chapters }: { courses: any[]; chapters: any[] }) {
   const [courseId, setCourseId] = useState<string>(courses[0]?._id || "");
