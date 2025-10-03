@@ -206,3 +206,27 @@ export async function markAttendance(input: z.infer<typeof attendanceSchema>) {
   revalidatePath("/dashboard/students");
   return { success: true };
 }
+
+// -------- Teacher Profile --------
+const teacherProfileSchema = z.object({
+  teacherId: z.string(),
+  name: z.string().min(2),
+  bio: z.string().optional(),
+  qualifications: z.string().optional(),
+  subjects: z.array(z.string()).optional(),
+  photoUrl: z.string().url().optional(),
+});
+
+export async function updateTeacherProfile(input: z.infer<typeof teacherProfileSchema>) {
+  await dbConnect();
+  const data = teacherProfileSchema.parse(input);
+  await Teacher.findByIdAndUpdate(data.teacherId, {
+    name: data.name,
+    bio: data.bio,
+    qualifications: data.qualifications,
+    subjects: data.subjects,
+    photoUrl: data.photoUrl,
+  });
+  revalidatePath("/dashboard/settings");
+  return { success: true };
+}
