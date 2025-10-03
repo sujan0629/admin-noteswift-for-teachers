@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space' });
 
 export const metadata: Metadata = {
-  title: 'NoteSwift Admin',
-  description: 'Admin dashboard for the NoteSwift platform.',
+  title: 'NoteSwift Teacher',
+  description: 'Teacher dashboard for the NoteSwift platform.',
 };
 
 export default function RootLayout({
