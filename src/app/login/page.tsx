@@ -59,10 +59,14 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+      <div className="w-full max-w-md rounded-2xl p-[1px] bg-gradient-to-r from-blue-500 to-cyan-500">
+        <Card className="w-full rounded-2xl bg-card/80 backdrop-blur border-blue-100">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex items-center justify-center">
             <img src="/assets/logo.jpg" alt="NoteSwift Logo" className="h-14 w-14 object-contain" />
+          </div>
+          <div className="inline-flex items-center gap-2 mx-auto mb-2 rounded-full bg-blue-50 px-3 py-1 text-blue-700 text-xs">
+            <Lock className="h-3 w-3" /> Secure login
           </div>
           <CardTitle className="text-3xl font-bold font-headline">NoteSwift Teacher</CardTitle>
           <CardDescription>Enter your credentials to access your teacher dashboard</CardDescription>
@@ -108,6 +112,7 @@ export default function LoginPage() {
           </form>
         </CardContent>
       </Card>
+      </div>
     </main>
   );
 }
