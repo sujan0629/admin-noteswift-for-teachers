@@ -44,6 +44,15 @@ export default async function TestsPage() {
 
       <Card>
         <CardHeader>
+          <CardTitle>Import / Export</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ImportExportQuestions tests={tests} />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
           <CardTitle>Recent Tests</CardTitle>
         </CardHeader>
         <CardContent>
