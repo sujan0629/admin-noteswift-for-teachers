@@ -29,7 +29,8 @@ export default function OtpPage() {
     setError("");
     setIsLoading(true);
 
-    const result = await handleVerifyOtp({ otp });
+    const resp = await fetch("/api/auth/verify-otp", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ otp }) });
+    const result = await resp.json();
 
     if (result.success) {
       localStorage.setItem("isAuthenticated", "true");
@@ -52,7 +53,8 @@ export default function OtpPage() {
 
   const onResend = async () => {
     setIsResending(true);
-    const result = await handleSendOtp();
+    const otpResp = await fetch("/api/auth/send-otp", { method: "POST" });
+    const result = await otpResp.json();
     if (result.success) {
       toast({
         title: "Code Resent",
