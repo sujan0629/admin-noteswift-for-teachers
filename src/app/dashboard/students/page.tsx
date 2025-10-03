@@ -2,6 +2,8 @@ import dbConnect from "@/lib/mongoose";
 import Student from "@/models/Student";
 import Course from "@/models/Course";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { ExportCSVButton } from "@/components/ui/export-csv";
+import { ExportPDFButton } from "@/components/ui/export-pdf";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
