@@ -5,6 +5,26 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from "recharts";
 
+export function MiniActivityChart({ data }: { data: { day: string; value: number }[] }) {
+  return (
+    <ResponsiveContainer width="100%" height={160}>
+      <AreaChart data={data} margin={{ left: 0, right: 0, top: 10, bottom: 0 }}>
+        <defs>
+          <linearGradient id="activity" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.6} />
+            <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <CartesianGrid strokeDasharray="3 3" vertical={false} />
+        <XAxis dataKey="day" tickLine={false} axisLine={false} />
+        <YAxis tickLine={false} axisLine={false} />
+        <Tooltip />
+        <Area type="monotone" dataKey="value" stroke="#8b5cf6" fillOpacity={1} fill="url(#activity)" />
+      </AreaChart>
+    </ResponsiveContainer>
+  );
+}
+
 interface AttendanceData {
   day: string;
   count: number;
