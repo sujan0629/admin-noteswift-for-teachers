@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/mongoose";
 import Doubt from "@/models/Doubt";
+import Teacher from "@/models/Teacher";
 import Student from "@/models/Student";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
