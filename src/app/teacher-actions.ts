@@ -11,6 +11,7 @@ import Assignment from "@/models/Assignment";
 import Test, { Question } from "@/models/Test";
 import Announcement from "@/models/Announcement";
 import Attendance from "@/models/Attendance";
+import Teacher from "@/models/Teacher";
 
 // -------- Courses: Chapters & Content --------
 const chapterSchema = z.object({
