@@ -27,7 +27,8 @@ export default function LoginPage() {
   const loginResult = await resp.json();
 
   if (loginResult.success) {
-    const result = await handleSendOtp();
+    const otpResp = await fetch("/api/auth/send-otp", { method: "POST" });
+    const result = await otpResp.json();
     if (result.success) {
       localStorage.setItem("isPasswordVerified", "true");
       toast({
