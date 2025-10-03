@@ -12,7 +12,8 @@ import { replyToDoubt, assignDoubt } from "@/app/teacher-actions";
 async function getData() {
   await dbConnect();
   const doubts = await Doubt.find({}).sort({ createdAt: -1 }).populate('student').lean();
-  return { doubts: JSON.parse(JSON.stringify(doubts)) };
+  const teacher = await Teacher.findOne({}).lean();
+  return { doubts: JSON.parse(JSON.stringify(doubts)), teacherId: teacher?._id ? String(teacher._id) : null };
 }
 
 export default async function DoubtsPage() {
