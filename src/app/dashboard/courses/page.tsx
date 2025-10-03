@@ -4,8 +4,6 @@
 // import Chapter from "@/models/Chapter";
 // import Content from "@/models/Content";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { CreateChapterForm } from "./create-chapter-form";
-import { CreateContentForm } from "./create-content-form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BookOpen, FileText, Video, FileArchive, CheckSquare, HelpCircle, BarChart3, Users, Clock } from "lucide-react";
@@ -178,7 +176,14 @@ export default async function CoursesPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <CreateChapterForm courses={courses} />
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button asChild>
+                <a href="/dashboard/courses/new-chapter">Go to Create Chapter</a>
+              </Button>
+              <Button asChild variant="outline">
+                <a href="/dashboard/courses">Learn More</a>
+              </Button>
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -192,7 +197,14 @@ export default async function CoursesPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <CreateContentForm chapters={chapters} />
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button asChild>
+                <a href="/dashboard/courses/upload-content">Go to Upload Page</a>
+              </Button>
+              <Button asChild variant="outline">
+                <a href="/dashboard/courses">Content Guidelines</a>
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
