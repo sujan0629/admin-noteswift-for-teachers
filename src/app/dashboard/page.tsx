@@ -112,6 +112,25 @@ export default async function DashboardPage() {
         </Card>
       </div>
 
+      {/* Weekly Activity */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Weekly Activity</CardTitle>
+          <CardDescription>Submissions, messages, and attendance interactions</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <MiniActivityChart data={[
+            { day: 'Mon', value: 22 },
+            { day: 'Tue', value: 35 },
+            { day: 'Wed', value: 28 },
+            { day: 'Thu', value: 44 },
+            { day: 'Fri', value: 39 },
+            { day: 'Sat', value: 18 },
+            { day: 'Sun', value: 12 },
+          ]} />
+        </CardContent>
+      </Card>
+
       {/* Main Content Grid */}
       <div className="grid gap-6 md:grid-cols-3">
         {/* Upcoming Classes */}
