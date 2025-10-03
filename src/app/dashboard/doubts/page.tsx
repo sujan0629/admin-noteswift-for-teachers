@@ -1,17 +1,18 @@
 import dbConnect from "@/lib/mongoose";
 import Doubt from "@/models/Doubt";
-import Student from "@/models/Student";
+import Teacher from "@/models/Teacher";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { ReplyAssignForm } from "./reply-assign-form";
 
 async function getData() {
   await dbConnect();
   const doubts = await Doubt.find({}).sort({ createdAt: -1 }).populate('student').lean();
-  return { doubts: JSON.parse(JSON.stringify(doubts)) };
+  const teacher = await Teacher.findOne({}).lean();
+  return { doubts: JSON.parse(JSON.stringify(doubts)), teacherId: teacher?._id ? String(teacher._id) : null };
 }
 
 export default async function DoubtsPage() {
-  const { doubts } = await getData();
+  const { doubts, teacherId } = await getData();
 
   return (
     <div className="space-y-8">
@@ -37,6 +38,9 @@ export default async function DoubtsPage() {
                       <span className="font-medium capitalize">{m.senderType}:</span> {m.text}
                     </div>
                   ))}
+                </div>
+                <div className="mt-3">
+                  <ReplyAssignForm doubtId={d._id} defaultTeacherId={teacherId} />
                 </div>
               </div>
             ))}

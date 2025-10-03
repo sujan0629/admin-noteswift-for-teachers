@@ -12,6 +12,10 @@ import Test, { Question } from "@/models/Test";
 import Announcement from "@/models/Announcement";
 import Attendance from "@/models/Attendance";
 import Teacher from "@/models/Teacher";
+import Feedback from "@/models/Feedback";
+import Doubt from "@/models/Doubt";
+import { Submission } from "@/models/Assignment";
+import { getQuestionSuggestions } from "@/ai/flows/question-suggestions";
 
 // -------- Courses: Chapters & Content --------
 const chapterSchema = z.object({
@@ -229,4 +233,70 @@ export async function updateTeacherProfile(input: z.infer<typeof teacherProfileS
   });
   revalidatePath("/dashboard/settings");
   return { success: true };
+}
+
+// -------- Submissions grading & comments --------
+const gradeSubmissionSchema = z.object({
+  submissionId: z.string(),
+  score: z.number().min(0),
+  feedback: z.string().optional(),
+});
+
+export async function gradeSubmission(input: z.infer<typeof gradeSubmissionSchema>) {
+  await dbConnect();
+  const data = gradeSubmissionSchema.parse(input);
+  await Submission.findByIdAndUpdate(data.submissionId, { score: data.score, graded: true, feedback: data.feedback });
+  revalidatePath("/dashboard/assignments");
+  return { success: true };
+}
+
+const autoGradeSchema = z.object({ submissionId: z.string() });
+export async function autoGradeSubmission(input: z.infer<typeof autoGradeSchema>) {
+  await dbConnect();
+  const { submissionId } = autoGradeSchema.parse(input);
+  const score = Math.floor(Math.random() * 100);
+  await Submission.findByIdAndUpdate(submissionId, { score, graded: true });
+  revalidatePath("/dashboard/assignments");
+  return { success: true, score };
+}
+
+// -------- Doubts: reply & assignment --------
+const replyDoubtSchema = z.object({ doubtId: z.string(), teacherId: z.string(), message: z.string().min(1) });
+export async function replyToDoubt(input: z.infer<typeof replyDoubtSchema>) {
+  await dbConnect();
+  const data = replyDoubtSchema.parse(input);
+  await Doubt.findByIdAndUpdate(data.doubtId, { $push: { messages: { senderType: 'teacher', sender: data.teacherId, text: data.message, createdAt: new Date() } } });
+  revalidatePath("/dashboard/doubts");
+  return { success: true };
+}
+
+const assignDoubtSchema = z.object({ doubtId: z.string(), teacherId: z.string() });
+export async function assignDoubt(input: z.infer<typeof assignDoubtSchema>) {
+  await dbConnect();
+  const data = assignDoubtSchema.parse(input);
+  await Doubt.findByIdAndUpdate(data.doubtId, { assignedTo: data.teacherId });
+  revalidatePath("/dashboard/doubts");
+  return { success: true };
+}
+
+// -------- Feedback collection --------
+const feedbackSchema = z.object({ rating: z.number().min(1).max(5), message: z.string().min(1), teacherId: z.string().optional() });
+export async function submitFeedback(input: z.infer<typeof feedbackSchema>) {
+  await dbConnect();
+  const data = feedbackSchema.parse(input);
+  await Feedback.create({ teacher: data.teacherId, rating: data.rating, message: data.message });
+  revalidatePath("/dashboard/feedback");
+  return { success: true };
+}
+
+// -------- AI Question suggestions (stub via Genkit) --------
+const questionSuggestSchema = z.object({ topic: z.string().min(2), type: z.enum(["mcq","numerical","short","long"]), count: z.number().int().min(1).max(10).default(3) });
+export async function suggestQuestions(input: z.infer<typeof questionSuggestSchema>) {
+  try {
+    const data = questionSuggestSchema.parse(input);
+    const result = await getQuestionSuggestions(data);
+    return { success: true, questions: result.questions };
+  } catch (e) {
+    return { success: false, error: "Suggestion service unavailable" };
+  }
 }

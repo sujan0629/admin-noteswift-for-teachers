@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/mongoose";
-import Assignment from "@/models/Assignment";
+import Assignment, { Submission } from "@/models/Assignment";
 import Course from "@/models/Course";
 import Chapter from "@/models/Chapter";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -7,18 +7,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { createAssignment } from "@/app/teacher-actions";
+import { createAssignment, gradeSubmission, autoGradeSubmission } from "@/app/teacher-actions";
 
 async function getData() {
   await dbConnect();
   const assignments = await Assignment.find({}).sort({ createdAt: -1 }).lean();
   const courses = await Course.find({}).lean();
   const chapters = await Chapter.find({}).lean();
-  return { assignments: JSON.parse(JSON.stringify(assignments)), courses: JSON.parse(JSON.stringify(courses)), chapters: JSON.parse(JSON.stringify(chapters)) };
+  const submissions = await Submission.find({}).sort({ submittedAt: -1 }).populate('student').lean();
+  return { assignments: JSON.parse(JSON.stringify(assignments)), courses: JSON.parse(JSON.stringify(courses)), chapters: JSON.parse(JSON.stringify(chapters)), submissions: JSON.parse(JSON.stringify(submissions)) };
 }
 
 export default async function AssignmentsPage() {
-  const { assignments, courses, chapters } = await getData();
+  const { assignments, courses, chapters, submissions } = await getData();
 
   return (
     <div className="space-y-8">
@@ -40,16 +41,35 @@ export default async function AssignmentsPage() {
         <CardContent>
           <div className="space-y-3">
             {assignments.map((a: any) => (
-              <div key={a._id} className="border rounded p-3 flex items-center justify-between">
-                <div>
-                  <p className="font-semibold">{a.title}</p>
-                  <p className="text-sm text-muted-foreground">{a.description || ""}</p>
-                  {a.deadline && <p className="text-xs text-muted-foreground">Deadline: {new Date(a.deadline).toLocaleString()}</p>}
+              <div key={a._id} className="border rounded p-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold">{a.title}</p>
+                    <p className="text-sm text-muted-foreground">{a.description || ""}</p>
+                    {a.deadline && <p className="text-xs text-muted-foreground">Deadline: {new Date(a.deadline).toLocaleString()}</p>}
+                  </div>
+                </div>
+                <div className="mt-3 space-y-2">
+                  {submissions.filter((s:any)=> String(s.assignment)===String(a._id)).map((s:any)=> (
+                    <SubmissionRow key={s._id} submission={s} />
+                  ))}
+                  {submissions.filter((s:any)=> String(s.assignment)===String(a._id)).length===0 && (
+                    <p className="text-sm text-muted-foreground">No submissions yet.</p>
+                  )}
                 </div>
               </div>
             ))}
             {assignments.length === 0 && <p className="text-sm text-muted-foreground">No assignments created.</p>}
           </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Plagiarism Checker</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <PlagiarismForm />
         </CardContent>
       </Card>
     </div>
@@ -59,6 +79,43 @@ export default async function AssignmentsPage() {
 "use client";
 import { useState, useTransition } from "react";
 import { Textarea } from "@/components/ui/textarea";
+
+function SubmissionRow({ submission }: { submission: any }) {
+  const [score, setScore] = useState<number>(submission.score ?? 0);
+  const [feedback, setFeedback] = useState<string>(submission.feedback ?? "");
+  const [isPending, startTransition] = useTransition();
+  return (
+    <div className="border rounded p-2 flex flex-col gap-2">
+      <div className="flex items-center justify-between text-sm">
+        <div>
+          <span className="font-medium">{submission.student?.name || 'Student'}</span>
+          <span className="ml-2 text-muted-foreground">{new Date(submission.submittedAt).toLocaleString()}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Input type="number" value={score} onChange={(e)=>setScore(parseInt(e.target.value))} className="w-24" />
+          <Button size="sm" onClick={()=> startTransition(async ()=>{ await gradeSubmission({ submissionId: submission._id, score, feedback: feedback || undefined }); })} disabled={isPending}>Save</Button>
+          <Button size="sm" variant="secondary" onClick={()=> startTransition(async ()=>{ await autoGradeSubmission({ submissionId: submission._id }); })} disabled={isPending}>Auto</Button>
+        </div>
+      </div>
+      <Textarea placeholder="Feedback / comments" value={feedback} onChange={(e)=>setFeedback(e.target.value)} />
+    </div>
+  );
+}
+
+function PlagiarismForm() {
+  const [text, setText] = useState("");
+  const [result, setResult] = useState<number | null>(null);
+  const [isPending, startTransition] = useTransition();
+  return (
+    <form onSubmit={(e)=>{ e.preventDefault(); startTransition(async ()=>{ const res = await fetch(`/api/plagiarism`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) }); const data = await res.json(); setResult(data.score ?? null); }); }} className="space-y-3">
+      <Textarea placeholder="Paste text to check..." value={text} onChange={(e)=>setText(e.target.value)} />
+      <div className="flex items-center gap-2">
+        <Button type="submit" disabled={isPending}>Run Check</Button>
+        {result!=null && <span className="text-sm">Similarity: {result}%</span>}
+      </div>
+    </form>
+  );
+}
 
 function CreateAssignmentForm({ courses, chapters }: { courses: any[]; chapters: any[] }) {
   const [courseId, setCourseId] = useState<string>(courses[0]?._id || "");

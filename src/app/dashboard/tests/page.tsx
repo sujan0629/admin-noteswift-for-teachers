@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { createTest, addQuestion } from "@/app/teacher-actions";
+import { createTest, addQuestion, suggestQuestions } from "@/app/teacher-actions";
+import { ImportExportQuestions } from "./import-export";
 
 async function getData() {
   await dbConnect();
@@ -44,6 +45,15 @@ export default async function TestsPage() {
 
       <Card>
         <CardHeader>
+          <CardTitle>Import / Export</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ImportExportQuestions tests={tests} />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
           <CardTitle>Recent Tests</CardTitle>
         </CardHeader>
         <CardContent>
@@ -68,6 +78,7 @@ export default async function TestsPage() {
 "use client";
 import { useState, useTransition } from "react";
 import { Textarea } from "@/components/ui/textarea";
+import { LatexPreview } from "@/components/latex-preview";
 
 function CreateTestForm({ courses, chapters }: { courses: any[]; chapters: any[] }) {
   const [courseId, setCourseId] = useState<string>(courses[0]?._id || "");
@@ -136,6 +147,8 @@ function AddQuestionForm({ tests }: { tests: any[] }) {
   const [difficulty, setDifficulty] = useState<string>("medium");
   const [usesLatex, setUsesLatex] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
+  const [topic, setTopic] = useState("");
+  const [suggested, setSuggested] = useState<any[]>([]);
 
   return (
     <form
@@ -166,6 +179,7 @@ function AddQuestionForm({ tests }: { tests: any[] }) {
       <div className="space-y-2 md:col-span-2">
         <Label>Question Text</Label>
         <Textarea value={text} onChange={(e)=>setText(e.target.value)} required />
+        <LatexPreview content={text} enabled={usesLatex} />
       </div>
       {type==='mcq' && (
         <div className="md:col-span-2 grid gap-2">
@@ -199,6 +213,10 @@ function AddQuestionForm({ tests }: { tests: any[] }) {
       )}
       <div className="grid grid-cols-2 gap-2 md:col-span-2">
         <div>
+          <Label>Topic (optional)</Label>
+          <Input value={topic} onChange={(e)=>setTopic(e.target.value)} placeholder="e.g., Algebra - Quadratic" />
+        </div>
+        <div>
           <Label>Difficulty</Label>
           <Select value={difficulty} onValueChange={setDifficulty}>
             <SelectTrigger><SelectValue /></SelectTrigger>
@@ -214,9 +232,30 @@ function AddQuestionForm({ tests }: { tests: any[] }) {
           <Label htmlFor="latex">Uses LaTeX</Label>
         </div>
       </div>
-      <div className="md:col-span-2">
+      <div className="md:col-span-2 flex items-center gap-2">
         <Button type="submit" disabled={isPending}>Add Question</Button>
+        <Button type="button" variant="secondary" onClick={async ()=>{
+          const res = await suggestQuestions({ topic: topic || text.slice(0,50), type: type as any, count: 3 });
+          if ((res as any).questions) setSuggested((res as any).questions);
+        }}>Suggest Questions</Button>
       </div>
+      {suggested.length>0 && (
+        <div className="md:col-span-2 border rounded p-3 space-y-2">
+          <p className="text-sm font-medium">Suggestions</p>
+          {suggested.map((q:any, i:number)=> (
+            <div key={i} className="text-sm">
+              <div className="flex items-center justify-between">
+                <span>{q.text}</span>
+                <Button size="sm" variant="outline" onClick={()=>{
+                  setText(q.text);
+                  if (q.options) setOptions(q.options);
+                  if (q.correctAnswer) setCorrectAnswer(q.correctAnswer);
+                }}>Use</Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </form>
   );
 }
