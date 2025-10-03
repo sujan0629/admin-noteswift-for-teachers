@@ -31,6 +31,8 @@ const links = [
   { href: "/dashboard/students", label: "Students", icon: Users },
   { href: "/dashboard/batches", label: "Batches", icon: ShieldCheck },
   { href: "/dashboard/doubts", label: "Doubts", icon: Info },
+  { href: "/dashboard/resources", label: "Resources", icon: BookCopy },
+  { href: "/dashboard/plagiarism", label: "Plagiarism", icon: ShieldCheck },
   { href: "/dashboard/analytics", label: "Analytics", icon: LineChart },
   { href: "/dashboard/announcements", label: "Announcements", icon: Bell },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
