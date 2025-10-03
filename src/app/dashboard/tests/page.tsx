@@ -231,9 +231,30 @@ function AddQuestionForm({ tests }: { tests: any[] }) {
           <Label htmlFor="latex">Uses LaTeX</Label>
         </div>
       </div>
-      <div className="md:col-span-2">
+      <div className="md:col-span-2 flex items-center gap-2">
         <Button type="submit" disabled={isPending}>Add Question</Button>
+        <Button type="button" variant="secondary" onClick={async ()=>{
+          const res = await suggestQuestions({ topic: topic || text.slice(0,50), type: type as any, count: 3 });
+          if ((res as any).questions) setSuggested((res as any).questions);
+        }}>Suggest Questions</Button>
       </div>
+      {suggested.length>0 && (
+        <div className="md:col-span-2 border rounded p-3 space-y-2">
+          <p className="text-sm font-medium">Suggestions</p>
+          {suggested.map((q:any, i:number)=> (
+            <div key={i} className="text-sm">
+              <div className="flex items-center justify-between">
+                <span>{q.text}</span>
+                <Button size="sm" variant="outline" onClick={()=>{
+                  setText(q.text);
+                  if (q.options) setOptions(q.options);
+                  if (q.correctAnswer) setCorrectAnswer(q.correctAnswer);
+                }}>Use</Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </form>
   );
 }
