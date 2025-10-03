@@ -12,6 +12,10 @@ import Test, { Question } from "@/models/Test";
 import Announcement from "@/models/Announcement";
 import Attendance from "@/models/Attendance";
 import Teacher from "@/models/Teacher";
+import Feedback from "@/models/Feedback";
+import Doubt from "@/models/Doubt";
+import { Submission } from "@/models/Assignment";
+import { getQuestionSuggestions } from "@/ai/flows/question-suggestions";
 
 // -------- Courses: Chapters & Content --------
 const chapterSchema = z.object({
