@@ -8,14 +8,14 @@ interface OtpEmailProps {
 export const OtpEmail: React.FC<Readonly<OtpEmailProps>> = ({ otp }) => (
   <Html>
     <Head />
-    <Preview>Your NoteSwift Admin OTP Code</Preview>
+    <Preview>Your NoteSwift Teacher OTP Code</Preview>
     <Body style={main}>
       <Container style={container}>
         <Heading style={heading}>Your One-Time Password</Heading>
         <Section>
           <Text style={paragraph}>Hi there,</Text>
           <Text style={paragraph}>
-            Your one-time password to log in to the NoteSwift Admin dashboard is:
+            Your one-time password to log in to the NoteSwift Teacher dashboard is:
           </Text>
           <Text style={otpText}>{otp}</Text>
           <Text style={paragraph}>

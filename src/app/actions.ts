@@ -38,9 +38,9 @@ export async function handleSendOtp() {
     await OTP.save();
     console.log(email)
     await resend.emails.send({
-      from: "NoteSwift Admin <noteswift@codelitsstudio.com>",
+      from: "NoteSwift Teacher <noteswift@codelitsstudio.com>",
       to: email,
-      subject: "Your NoteSwift Admin Login Code",
+      subject: "Your NoteSwift Teacher Login Code",
       react: OtpEmail({ otp }),
     });
 

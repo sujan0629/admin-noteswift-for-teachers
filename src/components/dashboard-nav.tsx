@@ -24,15 +24,18 @@ import { useLoading } from "@/context/loading-context";
 
 const links = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/dashboard/content", label: "Content", icon: BookCopy },
-  { href: "/dashboard/users", label: "Users", icon: Users },
-  { href: "/dashboard/reports", label: "Reports", icon: LineChart },
-  { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
-  { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
-  { href: "/dashboard/subscription", label: "Subscription", icon: Crown },
+  { href: "/dashboard/courses", label: "Courses", icon: BookCopy },
+  { href: "/dashboard/live-classes", label: "Live Classes", icon: Users },
+  { href: "/dashboard/assignments", label: "Assignments", icon: Bell },
+  { href: "/dashboard/tests", label: "Tests", icon: LineChart },
+  { href: "/dashboard/students", label: "Students", icon: Users },
+  { href: "/dashboard/batches", label: "Batches", icon: ShieldCheck },
+  { href: "/dashboard/doubts", label: "Doubts", icon: Info },
+  { href: "/dashboard/resources", label: "Resources", icon: BookCopy },
+  { href: "/dashboard/plagiarism", label: "Plagiarism", icon: ShieldCheck },
+  { href: "/dashboard/analytics", label: "Analytics", icon: LineChart },
+  { href: "/dashboard/announcements", label: "Announcements", icon: Bell },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
-  { href: "/dashboard/audit-log", label: "Audit Log", icon: ShieldCheck },
-  { href: "/dashboard/about", label: "About", icon: Info },
 ];
 
 export function DashboardNav() {
@@ -42,7 +45,7 @@ export function DashboardNav() {
   return (
     <nav className="flex flex-col h-full">
       <div className="px-4 py-4">
-        <h2 className="text-lg font-bold">Admin Panel</h2>
+        <h2 className="text-lg font-bold">Teacher Panel</h2>
       </div>
       <SidebarMenu className="flex-1 overflow-y-auto px-2 space-y-1">
         {links.map((link) => (

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -9,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { handleAdminLogin, handleSendOtp } from "@/app/actions";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -25,10 +23,12 @@ export default function LoginPage() {
   setError("");
   setIsLoading(true);
 
-  const loginResult = await handleAdminLogin(username, password);
+  const resp = await fetch("/api/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username, password }) });
+  const loginResult = await resp.json();
 
   if (loginResult.success) {
-    const result = await handleSendOtp();
+    const otpResp = await fetch("/api/auth/send-otp", { method: "POST" });
+    const result = await otpResp.json();
     if (result.success) {
       localStorage.setItem("isPasswordVerified", "true");
       toast({
@@ -68,8 +68,8 @@ export default function LoginPage() {
       className="h-16 w-16 object-contain"
     />
           </div>
-          <CardTitle className="text-3xl font-bold font-headline">NoteSwift Admin</CardTitle>
-          <CardDescription>Enter your credentials to access the dashboard</CardDescription>
+          <CardTitle className="text-3xl font-bold font-headline">NoteSwift Teacher</CardTitle>
+          <CardDescription>Enter your credentials to access your teacher dashboard</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-6">
