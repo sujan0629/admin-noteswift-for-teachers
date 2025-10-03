@@ -189,7 +189,7 @@ export default async function AssignmentsPage() {
 
       {/* Assignment Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        <Card>
+        <Card className="bg-blue-50/60 border-blue-100">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Assignments</CardTitle>
           </CardHeader>
@@ -201,7 +201,7 @@ export default async function AssignmentsPage() {
             <p className="text-xs text-muted-foreground mt-1">All time</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-secondary/60">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Active</CardTitle>
           </CardHeader>
@@ -213,7 +213,7 @@ export default async function AssignmentsPage() {
             <p className="text-xs text-muted-foreground mt-1">Currently open</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-l-4 border-red-500">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Overdue</CardTitle>
           </CardHeader>
@@ -225,7 +225,7 @@ export default async function AssignmentsPage() {
             <p className="text-xs text-muted-foreground mt-1">Past deadline</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-l-4 border-orange-500">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Pending Grading</CardTitle>
           </CardHeader>
@@ -237,7 +237,7 @@ export default async function AssignmentsPage() {
             <p className="text-xs text-muted-foreground mt-1">Need review</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-blue-50/60 to-transparent">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Submission Rate</CardTitle>
           </CardHeader>
