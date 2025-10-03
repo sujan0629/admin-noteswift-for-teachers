@@ -146,6 +146,8 @@ function AddQuestionForm({ tests }: { tests: any[] }) {
   const [difficulty, setDifficulty] = useState<string>("medium");
   const [usesLatex, setUsesLatex] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
+  const [topic, setTopic] = useState("");
+  const [suggested, setSuggested] = useState<any[]>([]);
 
   return (
     <form
