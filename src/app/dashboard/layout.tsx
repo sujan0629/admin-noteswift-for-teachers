@@ -108,9 +108,9 @@ export default function DashboardLayout({
                   <AvatarFallback>A</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
-                  <span className="font-semibold text-sm">NoteSwift Admin</span>
+                  <span className="font-semibold text-sm">NoteSwift Teacher</span>
                   <span className="text-xs text-muted-foreground">
-                    admin@noteswift.com
+                    teacher@noteswift.com
                   </span>
                 </div>
               </div>
