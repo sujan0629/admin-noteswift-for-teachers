@@ -104,7 +104,7 @@ export default async function CoursesPage() {
 
       {/* Content Overview Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        <Card>
+        <Card className="bg-blue-50/60 border-blue-100">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Total Content</CardTitle>
           </CardHeader>
@@ -113,7 +113,7 @@ export default async function CoursesPage() {
             <p className="text-xs text-muted-foreground mt-1">Across all courses</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-secondary/60">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Video Lectures</CardTitle>
           </CardHeader>
@@ -125,7 +125,7 @@ export default async function CoursesPage() {
             <p className="text-xs text-muted-foreground mt-1">Hours of content</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-l-4 border-green-500">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">PDF Documents</CardTitle>
           </CardHeader>
@@ -137,7 +137,7 @@ export default async function CoursesPage() {
             <p className="text-xs text-muted-foreground mt-1">Study materials</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-l-4 border-orange-500">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Assignments</CardTitle>
           </CardHeader>
@@ -149,7 +149,7 @@ export default async function CoursesPage() {
             <p className="text-xs text-muted-foreground mt-1">Active tasks</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-blue-50/60 to-transparent">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Question Banks</CardTitle>
           </CardHeader>
