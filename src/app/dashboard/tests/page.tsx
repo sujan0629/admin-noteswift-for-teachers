@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { createTest, addQuestion, suggestQuestions } from "@/app/teacher-actions";
+import { ImportExportQuestions } from "./import-export";
 
 async function getData() {
   await dbConnect();
