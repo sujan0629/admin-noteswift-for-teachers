@@ -4,7 +4,7 @@
 // import Course from "@/models/Course";
 // import Chapter from "@/models/Chapter";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
-import { CreateAssignmentForm, SubmissionRow, PlagiarismForm } from "./assignment-forms";
+import { SubmissionRow } from "./assignment-forms";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { FileText, CheckCircle, Clock, AlertTriangle, Users, BarChart3, Copy, Search, TrendingUp, FileCheck } from "lucide-react";
@@ -264,7 +264,14 @@ export default async function AssignmentsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <CreateAssignmentForm courses={courses} chapters={chapters} />
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button asChild>
+                <a href="/dashboard/assignments/new">Go to Create Page</a>
+              </Button>
+              <Button asChild variant="outline">
+                <a href="/dashboard/assignments">Learn More</a>
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
@@ -279,7 +286,14 @@ export default async function AssignmentsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <PlagiarismForm />
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button asChild>
+                <a href="/dashboard/assignments/plagiarism">Open Plagiarism Checker</a>
+              </Button>
+              <Button asChild variant="outline">
+                <a href="/dashboard/plagiarism">View All Reports</a>
+              </Button>
+            </div>
             <div className="mt-4 p-3 bg-muted rounded-lg">
               <h4 className="text-sm font-semibold mb-2">Detection Features:</h4>
               <ul className="text-xs space-y-1 text-muted-foreground">
