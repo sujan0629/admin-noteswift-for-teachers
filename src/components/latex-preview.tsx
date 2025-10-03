@@ -13,7 +13,7 @@ export function LatexPreview({ content, enabled }: { content: string; enabled?: 
     if (!enabled) return;
 
     const ensureMathJax = () => {
-      if (typeof window === 'undefined') return;
+      if (typeof window === 'undefined') return Promise.resolve();
       if (window.MathJax) return Promise.resolve();
       return new Promise<void>((resolve) => {
         const script = document.createElement('script');
