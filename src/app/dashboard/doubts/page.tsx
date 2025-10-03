@@ -1,7 +1,6 @@
 import dbConnect from "@/lib/mongoose";
 import Doubt from "@/models/Doubt";
 import Teacher from "@/models/Teacher";
-import dbConnect from "@/lib/mongoose";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ReplyAssignForm } from "./reply-assign-form";
 
