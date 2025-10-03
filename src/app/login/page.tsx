@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -68,8 +67,8 @@ export default function LoginPage() {
       className="h-16 w-16 object-contain"
     />
           </div>
-          <CardTitle className="text-3xl font-bold font-headline">NoteSwift Admin</CardTitle>
-          <CardDescription>Enter your credentials to access the dashboard</CardDescription>
+          <CardTitle className="text-3xl font-bold font-headline">NoteSwift Teacher</CardTitle>
+          <CardDescription>Enter your credentials to access your teacher dashboard</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-6">
