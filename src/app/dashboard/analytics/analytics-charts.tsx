@@ -11,15 +11,15 @@ export function MiniActivityChart({ data }: { data: { day: string; value: number
       <AreaChart data={data} margin={{ left: 0, right: 0, top: 10, bottom: 0 }}>
         <defs>
           <linearGradient id="activity" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.6} />
-            <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+            <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.6} />
+            <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="3 3" vertical={false} />
         <XAxis dataKey="day" tickLine={false} axisLine={false} />
         <YAxis tickLine={false} axisLine={false} />
         <Tooltip />
-        <Area type="monotone" dataKey="value" stroke="#8b5cf6" fillOpacity={1} fill="url(#activity)" />
+        <Area type="monotone" dataKey="value" stroke="#3b82f6" fillOpacity={1} fill="url(#activity)" />
       </AreaChart>
     </ResponsiveContainer>
   );
@@ -129,7 +129,7 @@ export function PerformanceCharts({ data }: { data: PerformanceData[] }) {
                 <YAxis dataKey="subject" type="category" width={100} />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="avgScore" fill="#8b5cf6" name="Average Score %" radius={[0, 8, 8, 0]} />
+                <Bar dataKey="avgScore" fill="#3b82f6" name="Average Score %" radius={[0, 8, 8, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -205,7 +205,7 @@ export function CourseProgressCharts({ data }: { data: CourseProgressData[] }) {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="enrolled" fill="#6366f1" name="Enrolled Students" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="enrolled" fill="#3b82f6" name="Enrolled Students" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -274,7 +274,7 @@ export function AssessmentCharts({ assignmentStats, testStats }: { assignmentSta
   ];
 
   const volumeData = [
-    { name: 'Assignments', value: assignmentStats.totalAssigned, color: '#8b5cf6' },
+    { name: 'Assignments', value: assignmentStats.totalAssigned, color: '#3b82f6' },
     { name: 'Tests', value: testStats.totalTests, color: '#ec4899' }
   ];
 

@@ -155,7 +155,7 @@ export default async function CoursesPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold flex items-center gap-2">
-              <HelpCircle className="h-5 w-5 text-purple-500" />
+              <HelpCircle className="h-5 w-5 text-blue-500" />
               {stats.questionBanks}
             </div>
             <p className="text-xs text-muted-foreground mt-1">Practice sets</p>

@@ -243,7 +243,7 @@ export default async function AssignmentsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-purple-500" />
+              <TrendingUp className="h-5 w-5 text-blue-500" />
               {stats.avgSubmissionRate}%
             </div>
             <p className="text-xs text-muted-foreground mt-1">Average</p>
