@@ -178,6 +178,7 @@ function AddQuestionForm({ tests }: { tests: any[] }) {
       <div className="space-y-2 md:col-span-2">
         <Label>Question Text</Label>
         <Textarea value={text} onChange={(e)=>setText(e.target.value)} required />
+        <LatexPreview content={text} enabled={usesLatex} />
       </div>
       {type==='mcq' && (
         <div className="md:col-span-2 grid gap-2">
