@@ -204,7 +204,7 @@ export default function OtpPage() {
       {/* Copyright Watermark */}
       <div className="mt-6 sm:mt-8 text-center px-4">
         <p className="text-xs text-gray-500">
-          © {new Date().getFullYear()} Note Swift. Developed by{" "}
+          © 2025 Note Swift. Developed by{" "}
           <a
             href="https://codelitsstudio.com"
             target="_blank"
